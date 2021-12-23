@@ -1,12 +1,36 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+
 
 class Nav extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: [],
+        };
+    }
+
+    componentDidMount() {
+        fetch('https://randomuser.me/api')
+            .then(res => res.json())
+            .then((result) => {
+                this.setState({
+                    items: result.results,
+                });
+            },
+            )
+    }
+
     render() {
+        const items = this.state;
+        debugger
         return (
-            <div>
-                Api
-            </div>
+            <ul>
+                {items.map(item => (
+                    <li key={item.email}>
+                        {item.cell}
+                    </li>
+                ))}
+            </ul>
         )
     }
 }
